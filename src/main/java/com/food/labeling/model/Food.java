@@ -24,8 +24,6 @@ public class Food {
     @Column(name = "food_name")
     private String foodName;
 
-    @Getter
-    @Setter
     @ManyToMany(fetch = FetchType.LAZY,
                 cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
