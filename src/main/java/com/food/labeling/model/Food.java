@@ -10,7 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "food")
@@ -31,6 +32,7 @@ public class Food {
             joinColumns = @JoinColumn(name = "food_id"),
             inverseJoinColumns = @JoinColumn(name = "label_id")
     )
+    @ToString.Exclude
     private Set<Label> labels = new HashSet<>();
 
     @UpdateTimestamp
