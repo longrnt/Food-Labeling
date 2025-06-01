@@ -1,0 +1,13 @@
+server:
+  port: 6060
+spring:
+  application:
+    name: food-labeling
+  datasource:
+    url: jdbc:postgresql://localhost:5432/food_labeling
+    username: jobbene
+    password: api
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
