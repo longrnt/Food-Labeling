@@ -31,7 +31,7 @@ public class Food {
     @JoinTable(
             name = "food_label",
             joinColumns = @JoinColumn(name = "food_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            inverseJoinColumns = @JoinColumn(name = "label_id")
     )
     private Set<Label> labels = new HashSet<>();
 
