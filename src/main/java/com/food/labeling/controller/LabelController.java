@@ -2,7 +2,6 @@ package com.food.labeling.controller;
 
 import com.food.labeling.payload.LabelCountDTO;
 import com.food.labeling.service.LabelService;
-import com.food.labeling.service.LabelServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,7 @@ import java.util.List;
 @RequestMapping("/public/api")
 public class LabelController {
 
-    private LabelService labelService;
+    private final LabelService labelService;
 
     public LabelController(LabelService labelService) {
         this.labelService = labelService;
