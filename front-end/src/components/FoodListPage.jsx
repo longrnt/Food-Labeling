@@ -49,6 +49,29 @@ export default function FoodListPage() {
     const handlePrevPage = () => setPageNumber(prev => Math.max(prev - 1, 0));
     const handleNextPage = () => setPageNumber(prev => Math.min(prev + 1, totalPages - 1));
 
+    const handleLabelToggle = (foodId, labelId, isAssigned) => {
+        const url = `${API_BASE}/associate/foods/${foodId}/labels/${labelId}`;
+        const method = isAssigned ? 'delete' : 'post';
+        axios({ method, url })
+            .then(() => {
+                // Refresh the food list after updating labels
+                const params = {
+                    labels: selectedLabels.join(','),
+                    pageNumber,
+                    pageSize,
+                    sortBy,
+                    sortOrder,
+                };
+                axios.get(`${API_BASE}/foods/getByLabels`, { params })
+                    .then(res => {
+                        setFoods(res.data.content);
+                        setTotalPages(res.data.totalPages);
+                    })
+                    .catch(err => console.error('Error fetching foods:', err));
+            })
+            .catch(err => console.error('Error updating label:', err));
+    };
+
     return (
         <div className="container">
             <h1>Food List</h1>
@@ -90,6 +113,7 @@ export default function FoodListPage() {
                 <tr>
                     <th>Name</th>
                     <th>Labels</th>
+                    <th>Assign/Unassign Labels</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -100,6 +124,21 @@ export default function FoodListPage() {
                             {food.labels.map((label, idx) => (
                                 <span key={idx} className="label-pill">{label}</span>
                             ))}
+                        </td>
+                        <td>
+                            {labels.map(label => {
+                                const isAssigned = food.labels.includes(label.label);
+                                return (
+                                    <label key={label.label}>
+                                        <input
+                                            type="checkbox"
+                                            checked={isAssigned}
+                                            onChange={() => handleLabelToggle(food.foodId, label.labelId, isAssigned)}
+                                        />
+                                        {label.label}
+                                    </label>
+                                );
+                            })}
                         </td>
                     </tr>
                 ))}

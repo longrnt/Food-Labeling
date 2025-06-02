@@ -12,9 +12,9 @@ import java.util.Optional;
 @Repository
 public interface LabelRepository extends JpaRepository<Label, Long> {
 
-    @Query("SELECT new com.food.labeling.payload.LabelCountDTO(l.labelName, COUNT(f)) " +
+    @Query("SELECT new com.food.labeling.payload.LabelCountDTO(l.labelId, l.labelName, COUNT(f)) " +
             "FROM Label l LEFT JOIN l.foods f " +
-            "GROUP BY l.labelName")
+            "GROUP BY l.labelId, l.labelName")
     List<LabelCountDTO> getLabelCounts();
 
     Optional<Label> findByLabelName(String labelName);

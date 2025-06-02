@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LabelCountDTO {
+    private Long labelId;
     private String label;
     private Long count;
 }
