@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface LabelRepository extends JpaRepository<Label, Long> {
@@ -15,4 +16,6 @@ public interface LabelRepository extends JpaRepository<Label, Long> {
             "FROM Label l LEFT JOIN l.foods f " +
             "GROUP BY l.labelName")
     List<LabelCountDTO> getLabelCounts();
+
+    Optional<Label> findByLabelName(String labelName);
 }
