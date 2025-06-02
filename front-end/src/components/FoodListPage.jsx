@@ -1,0 +1,116 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import './FoodListPage.css';
+
+const API_BASE = 'http://localhost:6060';
+
+export default function FoodListPage() {
+    const [foods, setFoods] = useState([]);
+    const [labels, setLabels] = useState([]);
+    const [selectedLabels, setSelectedLabels] = useState([]);
+    const [sortBy, setSortBy] = useState('foodName');
+    const [sortOrder, setSortOrder] = useState('asc');
+    const [pageNumber, setPageNumber] = useState(0);
+    const [totalPages, setTotalPages] = useState(1);
+    const pageSize = 5;
+
+    useEffect(() => {
+        axios.get(`${API_BASE}/labels/getAll/counts`)
+            .then(res => setLabels(res.data))
+            .catch(err => console.error('Error fetching labels:', err));
+    }, []);
+
+    useEffect(() => {
+        const params = {
+            labels: selectedLabels.join(','),
+            pageNumber,
+            pageSize,
+            sortBy,
+            sortOrder,
+        };
+        axios.get(`${API_BASE}/foods/getByLabels`, { params })
+            .then(res => {
+                setFoods(res.data.content);
+                setTotalPages(res.data.totalPages);
+            })
+            .catch(err => console.error('Error fetching foods:', err));
+    }, [selectedLabels, pageNumber, sortBy, sortOrder]);
+
+    const handleLabelChange = (e) => {
+        const { value, checked } = e.target;
+        setSelectedLabels(prev =>
+            checked ? [...prev, value] : prev.filter(label => label !== value)
+        );
+        setPageNumber(0);
+    };
+
+    const handleSortByChange = (e) => setSortBy(e.target.value);
+    const handleSortOrderChange = (e) => setSortOrder(e.target.value);
+    const handlePrevPage = () => setPageNumber(prev => Math.max(prev - 1, 0));
+    const handleNextPage = () => setPageNumber(prev => Math.min(prev + 1, totalPages - 1));
+
+    return (
+        <div className="container">
+            <h1>Food List</h1>
+
+            <div className="filters">
+                <div className="filter-group">
+                    <label><strong>Filter by Labels:</strong></label>
+                    <div className="checkbox-group">
+                        {labels.map(label => (
+                            <label key={label.label}>
+                                <input
+                                    type="checkbox"
+                                    value={label.label}
+                                    checked={selectedLabels.includes(label.label)}
+                                    onChange={handleLabelChange}
+                                />
+                                {label.label} ({label.count})
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="filter-group">
+                    <label><strong>Sort By:</strong></label>
+                    <select value={sortBy} onChange={handleSortByChange}>
+                        <option value="foodName">Name</option>
+                        <option value="foodId">ID</option>
+                    </select>
+
+                    <select value={sortOrder} onChange={handleSortOrderChange}>
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
+            </div>
+
+            <table className="food-table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Labels</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foods.map(food => (
+                    <tr key={food.foodId}>
+                        <td>{food.foodName}</td>
+                        <td>
+                            {food.labels.map((label, idx) => (
+                                <span key={idx} className="label-pill">{label}</span>
+                            ))}
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+
+            <div className="pagination">
+                <button onClick={handlePrevPage} disabled={pageNumber === 0}>Previous</button>
+                <span>Page {pageNumber + 1} of {totalPages}</span>
+                <button onClick={handleNextPage} disabled={pageNumber + 1 >= totalPages}>Next</button>
+            </div>
+        </div>
+    );
+}

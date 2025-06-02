@@ -1,0 +1,42 @@
+.label-manager {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.add-label {
+    margin-bottom: 20px;
+}
+
+.add-label input {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.label-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.label-table th,
+.label-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.label-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.label-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.label-table tr:hover {
+    background-color: #eaeaea;
+}
+
+.label-table button {
+    margin-right: 5px;
+    padding: 5px 10px;
+}
