@@ -4,7 +4,7 @@ import '../css/FoodListPage.css';
 
 const API_BASE = 'http://localhost:6060';
 
-export default function FoodListPage() {
+const FoodListPage = () => {
     const [foods, setFoods] = useState([]);
     const [labels, setLabels] = useState([]);
     const [selectedLabels, setSelectedLabels] = useState([]);
@@ -161,3 +161,5 @@ export default function FoodListPage() {
         </div>
     );
 }
+
+export default FoodListPage;

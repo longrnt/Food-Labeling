@@ -4,7 +4,7 @@ import '../css/LabelManager.css';
 
 const API_BASE = 'http://localhost:6060';
 
-const LabelManager = () => {
+const LabelManagerPage = () => {
     const [labels, setLabels] = useState([]);
     const [newLabelName, setNewLabelName] = useState('');
     const [editingLabelId, setEditingLabelId] = useState(null);
@@ -116,4 +116,4 @@ const LabelManager = () => {
     );
 };
 
-export default LabelManager;
+export default LabelManagerPage;
