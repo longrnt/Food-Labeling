@@ -2,6 +2,7 @@ package com.food.labeling.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,6 +24,7 @@ public class Label {
     private Long labelId;
 
     @Column(name = "label_name", unique = true, nullable = false)
+    @Size(min = 1, message = "Label name must have at least 1 character.")
     private String labelName;
 
     @ManyToMany(mappedBy = "labels")

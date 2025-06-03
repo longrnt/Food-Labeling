@@ -73,10 +73,10 @@ public class FoodServiceImpl implements FoodService {
         Optional<Label> labelOpt = labelRepository.findById(labelId);
 
         if (foodOpt.isEmpty()) {
-            throw new ResourceNotFoundException("Food", "id", foodId);
+            throw new ResourceNotFoundException("Food", "foodId", foodId);
         }
         if (labelOpt.isEmpty()) {
-            throw new ResourceNotFoundException("Label", "id", labelId);
+            throw new ResourceNotFoundException("Label", "labelId", labelId);
         }
 
         Food food = foodOpt.get();
@@ -91,10 +91,10 @@ public class FoodServiceImpl implements FoodService {
         Optional<Label> labelOpt = labelRepository.findById(labelId);
 
         if (foodOpt.isEmpty()) {
-            throw new ResourceNotFoundException("Food", "id", foodId);
+            throw new ResourceNotFoundException("Food", "foodId", foodId);
         }
         if (labelOpt.isEmpty()) {
-            throw new ResourceNotFoundException("Label", "id", labelId);
+            throw new ResourceNotFoundException("Label", "labelId", labelId);
         }
 
         Food food = foodOpt.get();

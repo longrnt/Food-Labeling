@@ -2,6 +2,7 @@ package com.food.labeling.controller;
 
 import com.food.labeling.model.Label;
 import com.food.labeling.payload.LabelCountDTO;
+import com.food.labeling.payload.LabelDTO;
 import com.food.labeling.repository.LabelRepository;
 import com.food.labeling.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class LabelController {
 
     private final LabelService labelService;
 
+    @Autowired
+    private LabelRepository labelRepository;
+
     public LabelController(LabelService labelService) {
         this.labelService = labelService;
     }
@@ -27,41 +31,31 @@ public class LabelController {
         return new ResponseEntity<>(labelCounts, HttpStatus.OK);
     }
 
-    @Autowired
-    private LabelRepository labelRepository;
-
     // Create a new label
     @PostMapping("/add")
-    public ResponseEntity<Label> createLabel(@RequestBody Label label) {
-        if (labelRepository.findByLabelName(label.getLabelName()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
-        Label savedLabel = labelRepository.save(label);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedLabel);
+    public ResponseEntity<LabelDTO> createLabel(@RequestBody LabelDTO labelDTO) {
+        LabelDTO savedLabelDTO = labelService.createLabel(labelDTO);
+        return new ResponseEntity<>(savedLabelDTO, HttpStatus.CREATED);
     }
 
     // Retrieve all labels
     @GetMapping("/getAll")
-    public List<Label> getAllLabels() {
-        return labelRepository.findAll();
+    public ResponseEntity<List<LabelDTO>> getAllLabels() {
+        List<LabelDTO> labelDTOList = labelService.getAllLabels();
+        return new ResponseEntity<>(labelDTOList, HttpStatus.OK);
     }
 
     // Update an existing label
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Label> updateLabel(@PathVariable Long id, @RequestBody Label labelDetails) {
-        return labelRepository.findById(id).map(label -> {
-            label.setLabelName(labelDetails.getLabelName());
-            labelRepository.save(label);
-            return ResponseEntity.ok(label);
-        }).orElse(ResponseEntity.notFound().build());
+    @PutMapping("/update/{labelId}")
+    public ResponseEntity<LabelDTO> updateLabel(@PathVariable Long labelId, @RequestBody LabelDTO labelDetails) {
+        LabelDTO updatedLabel = labelService.updateLabel(labelId, labelDetails);
+        return new ResponseEntity<>(updatedLabel, HttpStatus.OK);
     }
 
     // Delete a label
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteLabel(@PathVariable Long id) {
-        return labelRepository.findById(id).map(label -> {
-            labelRepository.delete(label);
-            return ResponseEntity.ok().<Void>build();
-        }).orElse(ResponseEntity.notFound().build());
+    @DeleteMapping("/delete/{labelId}")
+    public ResponseEntity<LabelDTO> deleteLabel(@PathVariable Long labelId) {
+        LabelDTO deletedLabel = labelService.deleteLabel(labelId);
+        return new ResponseEntity<>(deletedLabel, HttpStatus.OK);
     }
 }
