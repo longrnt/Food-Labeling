@@ -30,7 +30,7 @@ public class FoodLabelController {
             @RequestParam(name = "sortOrder", defaultValue = AppConstants.ASC, required = false) String sortOrder
     ) {
         log.info("Received request to get foods by labels");
-        FoodResponse foodResponse = foodService.searchByLabels(labels, pageNumber, pageSize, sortBy, sortOrder);
+        FoodResponse foodResponse = foodService.searchFoodsByLabels(labels, pageNumber, pageSize, sortBy, sortOrder);
         return new ResponseEntity<>(foodResponse, HttpStatus.OK);
     }
 

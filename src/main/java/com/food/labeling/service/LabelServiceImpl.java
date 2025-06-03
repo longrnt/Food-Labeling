@@ -3,15 +3,17 @@ package com.food.labeling.service;
 import com.food.labeling.exception.APIException;
 import com.food.labeling.exception.ResourceNotFoundException;
 import com.food.labeling.model.Label;
-import com.food.labeling.payload.LabelCountDTO;
+import com.food.labeling.payload.LabelFoodCountDTO;
 import com.food.labeling.payload.LabelDTO;
 import com.food.labeling.repository.LabelRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class LabelServiceImpl implements LabelService {
 
     private final LabelRepository labelRepository;
@@ -21,8 +23,8 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public List<LabelCountDTO> getLabelCounts() {
-        return labelRepository.getLabelCounts();
+    public List<LabelFoodCountDTO> getLabelFoodCount() {
+        return labelRepository.getLabelFoodCounts();
     }
 
     @Override
@@ -82,6 +84,7 @@ public class LabelServiceImpl implements LabelService {
             return new LabelDTO(labelData.getLabelId(), labelData.getLabelName());
 
         } catch (RuntimeException e) {
+            log.error(e.getMessage(), e);
             throw new APIException(e.getMessage());
         }
     }

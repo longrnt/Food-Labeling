@@ -87,14 +87,14 @@ const FoodListPage = () => {
                     <label><strong>Filter by Labels:</strong></label>
                     <div className="checkbox-group">
                         {labels.map(label => (
-                            <label key={label.label}>
+                            <label key={label.labelName}>
                                 <input
                                     type="checkbox"
-                                    value={label.label}
-                                    checked={selectedLabels.includes(label.label)}
+                                    value={label.labelName}
+                                    checked={selectedLabels.includes(label.labelName)}
                                     onChange={handleLabelChange}
                                 />
-                                {label.label} ({label.count})
+                                {label.labelName} ({label.foodCount})
                             </label>
                         ))}
                     </div>
@@ -135,15 +135,15 @@ const FoodListPage = () => {
                         </td>
                         <td>
                             {labels.map(label => {
-                                const isAssigned = food.labels.includes(label.label);
+                                const isAssigned = food.labels.includes(label.labelName);
                                 return (
-                                    <label key={label.label}>
+                                    <label key={label.labelName}>
                                         <input
                                             type="checkbox"
                                             checked={isAssigned}
                                             onChange={() => handleLabelToggle(food.foodId, label.labelId, isAssigned)}
                                         />
-                                        {label.label}
+                                        {label.labelName}
                                     </label>
                                 );
                             })}

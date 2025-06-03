@@ -1,6 +1,6 @@
 package com.food.labeling.controller;
 
-import com.food.labeling.payload.LabelCountDTO;
+import com.food.labeling.payload.LabelFoodCountDTO;
 import com.food.labeling.payload.LabelDTO;
 import com.food.labeling.service.LabelService;
 import org.springframework.http.HttpStatus;
@@ -20,8 +20,8 @@ public class LabelController {
     }
 
     @GetMapping("/getAll/counts")
-    public ResponseEntity<List<LabelCountDTO>> getAllLabelsWithCounts() {
-        List<LabelCountDTO> labelCounts = labelService.getLabelCounts();
+    public ResponseEntity<List<LabelFoodCountDTO>> getAllLabelsWithFoodCount() {
+        List<LabelFoodCountDTO> labelCounts = labelService.getLabelFoodCount();
         return new ResponseEntity<>(labelCounts, HttpStatus.OK);
     }
 

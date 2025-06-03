@@ -1,5 +1,10 @@
 package com.food.labeling.exception;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ResourceNotFoundException extends RuntimeException {
     String resourceName;
     String field;

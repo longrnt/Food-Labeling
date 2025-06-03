@@ -1,6 +1,7 @@
 package com.food.labeling.service;
 
 import com.food.labeling.config.AppConstants;
+import com.food.labeling.exception.APIException;
 import com.food.labeling.exception.ResourceNotFoundException;
 import com.food.labeling.model.Food;
 import com.food.labeling.model.Label;
@@ -27,7 +28,7 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public FoodResponse searchByLabels(List<String> labels, Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
+    public FoodResponse searchFoodsByLabels(List<String> labels, Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
 
         Sort.Direction direction = AppConstants.ASC.equalsIgnoreCase(sortOrder)
                 ? Sort.Direction.ASC
@@ -44,7 +45,7 @@ public class FoodServiceImpl implements FoodService {
         }
 
         if (foodPage == null) {
-            throw new RuntimeException("No food found");
+            throw new APIException("No food found");
         }
 
         List<FoodDTO> foodDTOList = foodPage.stream()

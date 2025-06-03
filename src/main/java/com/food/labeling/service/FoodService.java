@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface FoodService {
 
-    FoodResponse searchByLabels(List<String> labels, Integer pageNumber, Integer pageSize, String sortBy, String sortOrder);
+    FoodResponse searchFoodsByLabels(List<String> labels, Integer pageNumber, Integer pageSize, String sortBy, String sortOrder);
 
     void assignLabelToFood(Long foodId, Long labelId);
 
