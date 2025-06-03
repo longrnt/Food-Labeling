@@ -111,7 +111,8 @@ export default function FoodListPage() {
             <table className="food-table">
                 <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Food Name</th>
                     <th>Labels</th>
                     <th>Assign/Unassign Labels</th>
                 </tr>
@@ -119,6 +120,7 @@ export default function FoodListPage() {
                 <tbody>
                 {foods.map(food => (
                     <tr key={food.foodId}>
+                        <td>{food.foodId}</td>
                         <td>{food.foodName}</td>
                         <td>
                             {food.labels.map((label, idx) => (
