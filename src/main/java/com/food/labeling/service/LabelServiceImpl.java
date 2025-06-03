@@ -6,14 +6,10 @@ import com.food.labeling.model.Label;
 import com.food.labeling.payload.LabelCountDTO;
 import com.food.labeling.payload.LabelDTO;
 import com.food.labeling.repository.LabelRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class LabelServiceImpl implements LabelService {

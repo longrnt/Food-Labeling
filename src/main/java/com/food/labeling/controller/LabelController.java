@@ -1,11 +1,8 @@
 package com.food.labeling.controller;
 
-import com.food.labeling.model.Label;
 import com.food.labeling.payload.LabelCountDTO;
 import com.food.labeling.payload.LabelDTO;
-import com.food.labeling.repository.LabelRepository;
 import com.food.labeling.service.LabelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +14,6 @@ import java.util.List;
 public class LabelController {
 
     private final LabelService labelService;
-
-    @Autowired
-    private LabelRepository labelRepository;
 
     public LabelController(LabelService labelService) {
         this.labelService = labelService;

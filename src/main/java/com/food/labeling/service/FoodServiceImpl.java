@@ -9,7 +9,6 @@ import com.food.labeling.payload.FoodResponse;
 import com.food.labeling.repository.FoodRepository;
 import com.food.labeling.repository.LabelRepository;
 import org.springframework.data.domain.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
