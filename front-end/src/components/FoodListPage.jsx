@@ -62,12 +62,18 @@ export default function FoodListPage() {
                     sortBy,
                     sortOrder,
                 };
+                //Re-render food table
                 axios.get(`${API_BASE}/foods/getByLabels`, { params })
                     .then(res => {
                         setFoods(res.data.content);
                         setTotalPages(res.data.totalPages);
                     })
                     .catch(err => console.error('Error fetching foods:', err));
+
+                //Re-render "Filter by Labels" checklist
+                axios.get(`${API_BASE}/labels/getAll/counts`)
+                    .then(res => setLabels(res.data))
+                    .catch(err => console.error('Error fetching labels:', err));
             })
             .catch(err => console.error('Error updating label:', err));
     };
