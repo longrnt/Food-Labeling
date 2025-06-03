@@ -18,10 +18,10 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
         FROM Food f
         JOIN f.labels l
         WHERE l.labelName IN :labels
-        GROUP BY f
+        GROUP BY f.foodId
         HAVING COUNT(DISTINCT l.labelName) = :labelCount
     """)
-    Page<Food> findFoodIdsMatchingAllLabels(@Param("labels") List<String> labels,
-                                            @Param("labelCount") long labelCount,
-                                            Pageable pageable);
+    Page<Food> getFoodsMatchingAllLabels(@Param("labels") List<String> labels,
+                                         @Param("labelCount") long labelCount,
+                                         Pageable pageable);
 }

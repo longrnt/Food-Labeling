@@ -9,10 +9,7 @@ import com.food.labeling.repository.FoodRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Service
 public class FoodServiceImpl implements FoodService {
@@ -37,7 +34,7 @@ public class FoodServiceImpl implements FoodService {
         if (labels == null || labels.isEmpty()) {
             foodPage = foodRepository.findAll(pageable);
         } else {
-            foodPage = foodRepository.findFoodIdsMatchingAllLabels(labels, labels.size(), pageable);
+            foodPage = foodRepository.getFoodsMatchingAllLabels(labels, labels.size(), pageable);
         }
 
         if (foodPage == null) {
