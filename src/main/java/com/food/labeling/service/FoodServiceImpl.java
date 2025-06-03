@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FoodServiceImpl implements FoodService {
@@ -51,7 +52,7 @@ public class FoodServiceImpl implements FoodService {
                 .map(f -> new FoodDTO(
                         f.getFoodId(),
                         f.getFoodName(),
-                        f.getLabels().stream().map(Label::getLabelName).toList()
+                        f.getLabels().stream().map(Label::getLabelName).collect(Collectors.toSet())
                 ))
                 .toList();
 
