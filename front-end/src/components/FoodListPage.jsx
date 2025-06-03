@@ -50,7 +50,7 @@ const FoodListPage = () => {
     const handleNextPage = () => setPageNumber(prev => Math.min(prev + 1, totalPages - 1));
 
     const handleLabelToggle = (foodId, labelId, isAssigned) => {
-        const url = `${API_BASE}/associate/foods/${foodId}/labels/${labelId}`;
+        const url = `${API_BASE}/foods/${foodId}/labels/${labelId}`;
         const method = isAssigned ? 'delete' : 'post';
         axios({ method, url })
             .then(() => {
