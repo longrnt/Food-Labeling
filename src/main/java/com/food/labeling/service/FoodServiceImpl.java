@@ -1,23 +1,29 @@
 package com.food.labeling.service;
 
 import com.food.labeling.config.AppConstants;
+import com.food.labeling.exception.ResourceNotFoundException;
 import com.food.labeling.model.Food;
 import com.food.labeling.model.Label;
 import com.food.labeling.payload.FoodDTO;
 import com.food.labeling.payload.FoodResponse;
 import com.food.labeling.repository.FoodRepository;
+import com.food.labeling.repository.LabelRepository;
 import org.springframework.data.domain.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FoodServiceImpl implements FoodService {
 
     private final FoodRepository foodRepository;
+    private final LabelRepository labelRepository;
 
-    public FoodServiceImpl(FoodRepository foodRepository) {
+    public FoodServiceImpl(FoodRepository foodRepository, LabelRepository labelRepository) {
         this.foodRepository = foodRepository;
+        this.labelRepository = labelRepository;
     }
 
     @Override
@@ -58,6 +64,42 @@ public class FoodServiceImpl implements FoodService {
         foodResponse.setLastPage(foodPage.isLast());
 
         return foodResponse;
+    }
+
+    @Override
+    public void assignLabelToFood(Long foodId, Long labelId) {
+        Optional<Food> foodOpt = foodRepository.findById(foodId);
+        Optional<Label> labelOpt = labelRepository.findById(labelId);
+
+        if (foodOpt.isEmpty()) {
+            throw new ResourceNotFoundException("Food", "id", foodId);
+        }
+        if (labelOpt.isEmpty()) {
+            throw new ResourceNotFoundException("Label", "id", labelId);
+        }
+
+        Food food = foodOpt.get();
+        Label label = labelOpt.get();
+        food.getLabels().add(label);
+        foodRepository.save(food);
+    }
+
+    @Override
+    public void unassignLabelFromFood(Long foodId, Long labelId) {
+        Optional<Food> foodOpt = foodRepository.findById(foodId);
+        Optional<Label> labelOpt = labelRepository.findById(labelId);
+
+        if (foodOpt.isEmpty()) {
+            throw new ResourceNotFoundException("Food", "id", foodId);
+        }
+        if (labelOpt.isEmpty()) {
+            throw new ResourceNotFoundException("Label", "id", labelId);
+        }
+
+        Food food = foodOpt.get();
+        Label label = labelOpt.get();
+        food.getLabels().remove(label);
+        foodRepository.save(food);
     }
 
 }

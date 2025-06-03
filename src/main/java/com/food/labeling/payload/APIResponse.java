@@ -1,4 +1,4 @@
-package com.ecommerce.project.payload;
+package com.food.labeling.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

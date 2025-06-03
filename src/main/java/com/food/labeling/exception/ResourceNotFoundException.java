@@ -1,4 +1,4 @@
-package com.ecommerce.project.exception;
+package com.food.labeling.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     String resourceName;

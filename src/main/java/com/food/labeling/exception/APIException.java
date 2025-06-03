@@ -1,4 +1,4 @@
-package com.ecommerce.project.exception;
+package com.food.labeling.exception;
 
 public class APIException extends RuntimeException {
     private static final long serialVersionUID = 1L;
