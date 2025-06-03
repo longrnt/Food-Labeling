@@ -9,7 +9,10 @@ import com.food.labeling.repository.FoodRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class FoodServiceImpl implements FoodService {
@@ -29,17 +32,19 @@ public class FoodServiceImpl implements FoodService {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(direction, sortBy));
 
+        Page<Food> foodPage = null;
+
         if (labels == null || labels.isEmpty()) {
-            return getAllFoods(pageable);
+            foodPage = foodRepository.findAll(pageable);
         } else {
-            return getFoodsWithAllLabels(labels, pageable);
+            foodPage = foodRepository.findFoodIdsMatchingAllLabels(labels, labels.size(), pageable);
         }
-    }
 
-    private FoodResponse getAllFoods(Pageable pageable) {
-        Page<Food> foodPage = foodRepository.findAll(pageable);
+        if (foodPage == null) {
+            throw new RuntimeException("No food found");
+        }
 
-        List<FoodDTO> dtos = foodPage.stream()
+        List<FoodDTO> foodDTOList = foodPage.stream()
                 .map(f -> new FoodDTO(
                         f.getFoodId(),
                         f.getFoodName(),
@@ -48,7 +53,7 @@ public class FoodServiceImpl implements FoodService {
                 .toList();
 
         FoodResponse foodResponse = new FoodResponse();
-        foodResponse.setContent(dtos);
+        foodResponse.setContent(foodDTOList);
         foodResponse.setPageNumber(foodPage.getNumber());
         foodResponse.setPageSize(foodPage.getSize());
         foodResponse.setTotalElements(foodPage.getTotalElements());
@@ -58,26 +63,4 @@ public class FoodServiceImpl implements FoodService {
         return foodResponse;
     }
 
-    private FoodResponse getFoodsWithAllLabels(List<String> labels, Pageable pageable) {
-        Page<Long> foodIds = foodRepository.findFoodIdsMatchingAllLabels(labels, labels.size(), pageable);
-        List<Food> foods = foodRepository.findAllById(foodIds.getContent());
-
-        List<FoodDTO> dtos = foods.stream()
-                .map(f -> new FoodDTO(
-                        f.getFoodId(),
-                        f.getFoodName(),
-                        f.getLabels().stream().map(Label::getLabelName).toList()
-                ))
-                .toList();
-
-        FoodResponse foodResponse = new FoodResponse();
-        foodResponse.setContent(dtos);
-        foodResponse.setPageNumber(foodIds.getNumber());
-        foodResponse.setPageSize(foodIds.getSize());
-        foodResponse.setTotalElements(foodIds.getTotalElements());
-        foodResponse.setTotalPages(foodIds.getTotalPages());
-        foodResponse.setLastPage(foodIds.isLast());
-
-        return foodResponse;
-    }
 }

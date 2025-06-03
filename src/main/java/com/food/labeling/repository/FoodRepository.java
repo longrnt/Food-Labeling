@@ -14,14 +14,14 @@ import java.util.List;
 public interface FoodRepository extends JpaRepository<Food, Long> {
 
     @Query("""
-        SELECT f.foodId
+        SELECT f
         FROM Food f
         JOIN f.labels l
         WHERE l.labelName IN :labels
-        GROUP BY f.foodId
+        GROUP BY f
         HAVING COUNT(DISTINCT l.labelName) = :labelCount
     """)
-    Page<Long> findFoodIdsMatchingAllLabels(@Param("labels") List<String> labels,
+    Page<Food> findFoodIdsMatchingAllLabels(@Param("labels") List<String> labels,
                                             @Param("labelCount") long labelCount,
                                             Pageable pageable);
 }
