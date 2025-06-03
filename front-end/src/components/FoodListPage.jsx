@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './FoodListPage.css';
+import '../css/FoodListPage.css';
 
 const API_BASE = 'http://localhost:6060';
 
