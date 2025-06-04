@@ -266,6 +266,7 @@ A basic web interface provides to:
   * Filter food items by labels (API: filterable food querying by one or more labels)
   * View label usage stats (API: query all labels with food count respectively)
   * Assign/unassign labels to food items
+  * Support paging/sorting on Food Management table
 - Label Management
   * Create, update, and delete labels
 
