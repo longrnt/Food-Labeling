@@ -9,6 +9,7 @@ import com.food.labeling.payload.FoodDTO;
 import com.food.labeling.payload.FoodResponse;
 import com.food.labeling.repository.FoodRepository;
 import com.food.labeling.repository.LabelRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class FoodServiceImpl implements FoodService {
 
     private final FoodRepository foodRepository;
@@ -45,6 +47,7 @@ public class FoodServiceImpl implements FoodService {
         }
 
         if (foodPage == null) {
+            log.error("No food found");
             throw new APIException("No food found");
         }
 
@@ -73,9 +76,11 @@ public class FoodServiceImpl implements FoodService {
         Optional<Label> labelOpt = labelRepository.findById(labelId);
 
         if (foodOpt.isEmpty()) {
+            log.error("Food with id {} does not exist", foodId);
             throw new ResourceNotFoundException("Food", "foodId", foodId);
         }
         if (labelOpt.isEmpty()) {
+            log.error("Label with id {} does not exist", labelId);
             throw new ResourceNotFoundException("Label", "labelId", labelId);
         }
 
@@ -91,9 +96,11 @@ public class FoodServiceImpl implements FoodService {
         Optional<Label> labelOpt = labelRepository.findById(labelId);
 
         if (foodOpt.isEmpty()) {
+            log.error("Food with id {} does not exist", foodId);
             throw new ResourceNotFoundException("Food", "foodId", foodId);
         }
         if (labelOpt.isEmpty()) {
+            log.error("Label with id {} does not exist", labelId);
             throw new ResourceNotFoundException("Label", "labelId", labelId);
         }
 

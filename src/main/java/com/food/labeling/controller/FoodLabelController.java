@@ -29,19 +29,22 @@ public class FoodLabelController {
             @RequestParam(name = "sortBy", defaultValue = AppConstants.FOOD_NAME, required = false) String sortBy,
             @RequestParam(name = "sortOrder", defaultValue = AppConstants.ASC, required = false) String sortOrder
     ) {
-        log.info("Received request to get foods by labels");
+        log.info("Received GET /foods/getByLabels with params: labels={}, pageNumber={}, pageSize={}, sortBy={}, sortOrder={}",
+                labels, pageNumber, pageSize, sortBy, sortOrder);
         FoodResponse foodResponse = foodService.searchFoodsByLabels(labels, pageNumber, pageSize, sortBy, sortOrder);
         return new ResponseEntity<>(foodResponse, HttpStatus.OK);
     }
 
     @PostMapping("/{foodId}/labels/{labelId}")
     public ResponseEntity<?> assignLabelToFood(@PathVariable Long foodId, @PathVariable Long labelId) {
+        log.info("Received POST /foods/{}/labels/{} to assign label", foodId, labelId);
         foodService.assignLabelToFood(foodId, labelId);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{foodId}/labels/{labelId}")
     public ResponseEntity<?> unassignLabelFromFood(@PathVariable Long foodId, @PathVariable Long labelId) {
+        log.info("Received DELETE /foods/{}/labels/{} to unassign label", foodId, labelId);
         foodService.unassignLabelFromFood(foodId, labelId);
         return ResponseEntity.ok().build();
     }

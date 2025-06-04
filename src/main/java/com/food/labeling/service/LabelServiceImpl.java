@@ -30,9 +30,11 @@ public class LabelServiceImpl implements LabelService {
     @Override
     public LabelDTO createLabel(LabelDTO labelDTO) {
         if (labelDTO.getLabelName() == null || labelDTO.getLabelName().isEmpty()) {
+            log.error("Label name cannot be empty");
             throw new APIException("Label name cannot be empty");
         }
         if (labelRepository.findByLabelName(labelDTO.getLabelName()).isPresent()) {
+            log.error("Label with name {} already exists", labelDTO.getLabelName());
             throw new APIException("The label " + labelDTO.getLabelName() + " already exists.");
         }
 
@@ -56,11 +58,13 @@ public class LabelServiceImpl implements LabelService {
     public LabelDTO updateLabel(Long labelId, LabelDTO labelDetails) {
 
         if (labelDetails.getLabelName() == null || labelDetails.getLabelName().isEmpty()) {
+            log.error("Label name cannot be empty");
             throw new APIException("Label name cannot be empty");
         }
 
         Optional<Label> labelOpt = labelRepository.findById(labelId);
         if (labelOpt.isEmpty()) {
+            log.error("Label with id {} does not exist", labelId);
             throw new ResourceNotFoundException("Label", "labelId", labelId);
         }
 
@@ -75,6 +79,7 @@ public class LabelServiceImpl implements LabelService {
     public LabelDTO deleteLabel(Long labelId) {
         Optional<Label> labelOpt = labelRepository.findById(labelId);
         if (labelOpt.isEmpty()) {
+            log.error("Label with id {} does not exist", labelId);
             throw new ResourceNotFoundException("Label", "labelId", labelId);
         }
 
