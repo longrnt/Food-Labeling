@@ -7,8 +7,9 @@ A scalable application for managing and labeling food items using a PostgreSQL d
 ## 📌 Goals
 
 * ✅ Store and manage millions of food items
-* ✅ Assign and manage labels with full many-to-many support
 * ✅ Query foods by one or more labels (AND logic)
+* ✅ View label usage stats (how many food items per each label)
+* ✅ Assign and manage labels with full many-to-many support
 * ✅ Provide simple UI and REST APIs
 
 ---
