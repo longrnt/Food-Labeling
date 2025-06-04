@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/FoodListPage.css';
 
-const API_BASE = 'http://localhost:6060';
+const API_BASE = 'http://localhost:8080';
 
 const FoodListPage = () => {
     const [foods, setFoods] = useState([]);

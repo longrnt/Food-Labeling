@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/LabelManager.css';
 
-const API_BASE = 'http://localhost:6060';
+const API_BASE = 'http://localhost:8080';
 
 const LabelManagerPage = () => {
     const [labels, setLabels] = useState([]);

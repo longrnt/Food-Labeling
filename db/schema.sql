@@ -1,0 +1,21 @@
+CREATE TABLE food (
+    food_id SERIAL PRIMARY KEY,
+    food_name TEXT UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE label (
+    label_id SERIAL PRIMARY KEY,
+    label_name TEXT UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE food_label (
+    food_id INT NOT NULL,
+    label_id INT NOT NULL,
+    PRIMARY KEY (food_id, label_id),
+    FOREIGN KEY (food_id) REFERENCES food(food_id) ON DELETE CASCADE,
+    FOREIGN KEY (label_id) REFERENCES label(label_id) ON DELETE CASCADE
+);
