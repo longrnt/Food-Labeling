@@ -337,5 +337,5 @@ npm run dev
 - Enjoy!
 
 ### Future enhancement
-- Add searching feature for food on Food Management page. This will help user quickly get the food they want.
-- Add pagination and sorting for Label Management table.
+- Add searching feature for food on Food Management page. This will help users quickly get the food they want.
+- Add pagination and sorting for the Label Management table.
