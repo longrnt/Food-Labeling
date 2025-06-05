@@ -144,9 +144,9 @@ GET /foods/getByLabels?labels=vegan,gluten-free&pageNumber=0&pageSize=5&sortBy=f
   ],
   "pageNumber": 0,
   "pageSize": 5,
-  "totalElements": 100,
-  "totalPages": 10,
-  "lastPage": false
+  "totalElements": 1,
+  "totalPages": 1,
+  "lastPage": true
 }
 ```
 
