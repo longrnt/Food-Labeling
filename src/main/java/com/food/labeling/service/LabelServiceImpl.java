@@ -9,6 +9,7 @@ import com.food.labeling.repository.LabelRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +25,16 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public List<LabelFoodCountDTO> getLabelFoodCount() {
-        return labelRepository.getLabelFoodCounts();
+        List<LabelFoodCountDTO> labelFoodCountList = labelRepository.getLabelFoodCounts();
+
+        //Since labelFoodCountList is un-sortable, we have to clone it to another list to sort it.
+        List<LabelFoodCountDTO> resultList = new ArrayList<>(labelFoodCountList);
+
+        //Sort result list so that it will be easier for users to look up labels in Food Management page
+        resultList.sort((a, b)
+                -> a.getLabelName().compareTo(b.getLabelName()));
+
+        return resultList;
     }
 
     @Override
